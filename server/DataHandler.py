@@ -108,3 +108,7 @@ java_general = [item["一般"] for item in java]
 java_medium = [item["中等"] for item in java]
 java_high = [item["较高"] for item in java]
 java_fine = [item["优秀"] for item in java]
+
+if __name__ == '__main__':
+    print(web)
+    print(java)

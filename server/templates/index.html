@@ -55,7 +55,7 @@
         function fetchData() {
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:8000/WebLine",
+                url: "http://127.0.0.1:8000/WebBar",
                 dataType: 'json',
                 success: function(result) {
                     chart.setOption(JSON.parse(result));
