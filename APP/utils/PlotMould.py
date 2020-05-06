@@ -1,5 +1,5 @@
 from typing import List
-from pyecharts.charts import Pie, Line, Bar
+from pyecharts.charts import Pie, Line, Bar, Bar3D
 from pyecharts import options as opts
 
 
@@ -60,11 +60,11 @@ def bars(data: List) -> Bar:
     bar = (
         Bar()
             .add_xaxis(["较低", "一般", "中等", "较高", "优秀"])
-            .add_yaxis("北京", data[0].values())
-            .add_yaxis("上海", data[1].values())
-            .add_yaxis("广州", data[2].values())
-            .add_yaxis("深圳", data[3].values())
-            .add_yaxis("成都", data[4].values())
+            .add_yaxis("北京", list(data[0].values()))
+            .add_yaxis("上海", list(data[1].values()))
+            .add_yaxis("广州", list(data[2].values()))
+            .add_yaxis("深圳", list(data[3].values()))
+            .add_yaxis("成都", list(data[4].values()))
             .set_global_opts(
             title_opts=opts.TitleOpts(title="北京-上海-广州-深圳-成都"),
             brush_opts=opts.BrushOpts(),
@@ -72,6 +72,45 @@ def bars(data: List) -> Bar:
         )
     )
     return bar
+
+
+def bar3d(data: List) -> Bar3D:
+    levels = ["较低", "一般", "中等", "较高", "优秀"]
+    cities = ["北京", "上海", "广州", "深圳", "成都"]
+    matrix = []
+    for i in range(5):
+        d = [[key, cities[i], value] for key, value in data[i].items()]
+        matrix.extend(d)
+    bar = (
+        Bar3D(init_opts=opts.InitOpts(width="1600px", height="800px"))
+            .add(
+            series_name="",
+            data=matrix,
+            xaxis3d_opts=opts.Axis3DOpts(type_="category", data=levels),
+            yaxis3d_opts=opts.Axis3DOpts(type_="category", data=cities),
+            zaxis3d_opts=opts.Axis3DOpts(type_="value"),
+        )
+            .set_global_opts(
+            visualmap_opts=opts.VisualMapOpts(
+                max_=450,
+                range_color=[
+                    "#313695",
+                    "#4575b4",
+                    "#74add1",
+                    "#abd9e9",
+                    "#e0f3f8",
+                    "#ffffbf",
+                    "#fee090",
+                    "#fdae61",
+                    "#f46d43",
+                    "#d73027",
+                    "#a50026",
+                ],
+            )
+        )
+    )
+    return bar
+
 
 
 def lines(low, general, medium, high, fine) -> Line:
