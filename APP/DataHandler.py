@@ -112,3 +112,4 @@ java_fine = [item["优秀"] for item in java]
 if __name__ == '__main__':
     print(web)
     print(java)
+    print(bd)
